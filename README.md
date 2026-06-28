@@ -26,3 +26,23 @@
 - 将本固件作为商业方案的一部分使用。
 
 详见 [LICENSE](LICENSE)。
+
+## 离线刷写
+
+如果不想使用网页在线烧录，可以下载离线刷写包：
+
+[BambuMonitor-ESP32S3-DualEye-20260629-030534.zip](downloads/BambuMonitor-ESP32S3-DualEye-20260629-030534.zip)
+
+解压后：
+
+```powershell
+.\flash.ps1 -Port COM13
+```
+
+或在 cmd 中：
+
+```bat
+flash.bat COM13
+```
+
+离线刷写包同样只允许个人、评估、维修和非商业部署使用，不允许商用。

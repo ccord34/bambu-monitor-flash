@@ -171,6 +171,19 @@
         gap: 14px;
       }
 
+      .download-link {
+        display: inline-flex;
+        min-height: 48px;
+        align-items: center;
+        border: 1px solid rgba(95, 132, 103, 0.34);
+        border-radius: 12px;
+        background: #e4efe2;
+        color: #2d5839;
+        font-weight: 800;
+        padding: 0 18px;
+        text-decoration: none;
+      }
+
       esp-web-install-button {
         --esp-tools-button-color: var(--accent);
         --esp-tools-button-text-color: #ffffff;
@@ -317,6 +330,13 @@
                 <span slot="unsupported">请使用桌面版 Chrome 或 Edge。</span>
                 <span slot="not-allowed">请通过 HTTPS 或 localhost 打开此页面。</span>
               </esp-web-install-button>
+              <a
+                class="download-link"
+                href="./downloads/BambuMonitor-ESP32S3-DualEye-20260629-030534.zip"
+                download
+              >
+                下载离线刷写包
+              </a>
               <span class="support">需要 USB 数据线，不要使用只能充电的线</span>
             </div>
             <p class="license-note">
@@ -346,6 +366,10 @@
           <div class="detail">
             <h2>完成后</h2>
             <p>设备重启，按现有逻辑进入 Wi-Fi、后台配置或主界面。</p>
+          </div>
+          <div class="detail">
+            <h2>离线刷写</h2>
+            <p>不想使用网页烧录时，可下载离线刷写包，解压后运行 flash.ps1 或 flash.bat。</p>
           </div>
         </section>
       </main>
