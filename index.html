@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Bambu Monitor 在线烧录</title>
+    <script
+      type="module"
+      src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"
+    ></script>
+    <style>
+      :root {
+        --ink: #172021;
+        --muted: #64706c;
+        --line: #dce4dc;
+        --paper: #f7f4ed;
+        --surface: #ffffff;
+        --accent: #88a98d;
+        --accent-dark: #5f8467;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        background: linear-gradient(180deg, rgba(247, 244, 237, 0.96), rgba(233, 241, 235, 0.96));
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      .page {
+        width: min(980px, calc(100% - 28px));
+        margin: 0 auto;
+        padding: 30px 0 44px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .mark {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border-radius: 50%;
+        background: #e0ecdf;
+        color: #315f3d;
+        font-weight: 900;
+      }
+
+      .brand-name {
+        margin: 0;
+        font-size: 1.08rem;
+        font-weight: 800;
+      }
+
+      .brand-subtitle {
+        margin: 3px 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.04fr) minmax(280px, 0.96fr);
+        gap: 28px;
+        align-items: stretch;
+      }
+
+      .panel,
+      .visual {
+        border: 1px solid rgba(23, 32, 33, 0.1);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.82);
+        box-shadow: 0 18px 52px rgba(26, 47, 43, 0.1);
+      }
+
+      .panel {
+        padding: 28px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2.2rem, 8vw, 4rem);
+        line-height: 1;
+        letter-spacing: -0.04em;
+      }
+
+      .lead {
+        margin: 18px 0 24px;
+        color: #394744;
+        font-size: 1.02rem;
+        line-height: 1.65;
+      }
+
+      .field {
+        display: grid;
+        gap: 9px;
+        margin-bottom: 16px;
+      }
+
+      label {
+        color: #253133;
+        font-size: 0.85rem;
+        font-weight: 760;
+      }
+
+      select {
+        width: 100%;
+        min-height: 48px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--surface);
+        color: var(--ink);
+        font: inherit;
+        font-weight: 700;
+        padding: 0 42px 0 14px;
+      }
+
+      .release-info {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin: 16px 0 22px;
+      }
+
+      .fact {
+        min-width: 0;
+        padding: 8px 12px;
+        border-left: 1px solid rgba(23, 32, 33, 0.14);
+      }
+
+      .fact span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.76rem;
+        font-weight: 760;
+      }
+
+      .fact strong {
+        display: block;
+        overflow-wrap: anywhere;
+        margin-top: 4px;
+        font-size: 0.96rem;
+      }
+
+      .note {
+        margin: 0 0 18px;
+        color: var(--muted);
+        font-size: 0.94rem;
+        line-height: 1.6;
+      }
+
+      .install-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px;
+      }
+
+      esp-web-install-button {
+        --esp-tools-button-color: var(--accent);
+        --esp-tools-button-text-color: #ffffff;
+        --esp-tools-button-border-radius: 12px;
+      }
+
+      .primary-button {
+        min-height: 48px;
+        border: 0;
+        border-radius: 12px;
+        background: var(--accent);
+        color: #ffffff;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 800;
+        padding: 0 22px;
+      }
+
+      .support {
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .license-note {
+        margin-top: 16px;
+        color: #7a4c18;
+        font-size: 0.86rem;
+        line-height: 1.5;
+      }
+
+      .visual {
+        display: grid;
+        min-height: 380px;
+        place-items: center;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 50% 45%, rgba(136, 169, 141, 0.34), transparent 42%),
+          #101817;
+      }
+
+      .device {
+        display: grid;
+        width: 240px;
+        height: 240px;
+        place-items: center;
+        border: 16px solid #2cd84a;
+        border-radius: 50%;
+        background: #020504;
+        box-shadow: 0 18px 70px rgba(0, 0, 0, 0.38);
+        color: #eef9ff;
+        text-align: center;
+      }
+
+      .device strong {
+        display: block;
+        font-size: 2.6rem;
+        line-height: 1;
+      }
+
+      .device span {
+        display: block;
+        margin-top: 10px;
+        color: #c6d6d6;
+        font-weight: 700;
+      }
+
+      .details {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      .detail {
+        padding: 18px;
+        border-top: 1px solid rgba(23, 32, 33, 0.16);
+      }
+
+      .detail h2 {
+        margin: 0 0 8px;
+        font-size: 1rem;
+      }
+
+      .detail p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.93rem;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 820px) {
+        .hero, .details, .release-info { grid-template-columns: 1fr; }
+        .visual { order: -1; min-height: 300px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div class="brand" aria-label="Bambu Monitor">
+          <div class="mark" aria-hidden="true">BM</div>
+          <div>
+            <p class="brand-name">Bambu Monitor</p>
+            <p class="brand-subtitle">ESP32-S3 DualEye 在线烧录</p>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="page-title">
+          <div class="panel">
+            <h1 id="page-title">Factory Flash</h1>
+            <p class="lead">
+              使用 Chrome 或 Edge，通过 USB 数据线直接给 ESP32-S3-DualEye 设备刷入 Bambu Monitor 固件。
+            </p>
+
+            <div class="field">
+              <label for="firmware-select">固件版本</label>
+              <select id="firmware-select" autocomplete="off"></select>
+            </div>
+
+            <div class="release-info" aria-live="polite">
+              <div class="fact">
+                <span>通道</span>
+                <strong id="firmware-channel">Stable</strong>
+              </div>
+              <div class="fact">
+                <span>版本</span>
+                <strong id="firmware-version">dev</strong>
+              </div>
+              <div class="fact">
+                <span>写入地址</span>
+                <strong>0x0</strong>
+              </div>
+            </div>
+
+            <p class="note" id="firmware-note"></p>
+
+            <div class="install-row">
+              <esp-web-install-button id="install-button">
+                <button class="primary-button" slot="activate" type="button">
+                  安装所选固件
+                </button>
+                <span slot="unsupported">请使用桌面版 Chrome 或 Edge。</span>
+                <span slot="not-allowed">请通过 HTTPS 或 localhost 打开此页面。</span>
+              </esp-web-install-button>
+              <span class="support">需要 USB 数据线，不要使用只能充电的线</span>
+            </div>
+            <p class="license-note">
+              本页面与固件仅允许个人、评估、维修和非商业部署使用；未经授权不允许商用。
+            </p>
+          </div>
+
+          <aside class="visual" aria-label="Bambu Monitor device preview">
+            <div class="device">
+              <div>
+                <strong>100%</strong>
+                <span>Bambu Monitor</span>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section class="details" aria-label="烧录说明">
+          <div class="detail">
+            <h2>连接设备</h2>
+            <p>插入 ESP32-S3，点击安装后在浏览器弹窗里选择对应串口。</p>
+          </div>
+          <div class="detail">
+            <h2>写入内容</h2>
+            <p>页面会写入合并固件，包含 bootloader、分区表、boot_app0 和应用固件。</p>
+          </div>
+          <div class="detail">
+            <h2>完成后</h2>
+            <p>设备重启，按现有逻辑进入 Wi-Fi、后台配置或主界面。</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const firmwares = [
+        {
+          label: "Stable 20260629-030534",
+          channel: "Stable",
+          version: "20260629-030534",
+          path: "./firmware/bambu_monitor_full.bin",
+          note: "完整工厂刷写固件，从 0x0 写入。刷写会覆盖当前固件，请先确认设备和串口正确。",
+        },
+      ];
+
+      const select = document.querySelector("#firmware-select");
+      const installButton = document.querySelector("#install-button");
+      const channel = document.querySelector("#firmware-channel");
+      const version = document.querySelector("#firmware-version");
+      const note = document.querySelector("#firmware-note");
+      let manifestUrl = null;
+
+      function manifestFor(firmware) {
+        const imageUrl = new URL(firmware.path, window.location.href).href;
+        return {
+          name: "Bambu Monitor",
+          version: firmware.version,
+          new_install_prompt_erase: false,
+          new_install_improv_wait_time: 0,
+          builds: [
+            {
+              chipFamily: "ESP32-S3",
+              improv: false,
+              parts: [{ path: imageUrl, offset: 0 }],
+            },
+          ],
+        };
+      }
+
+      function setManifest(firmware) {
+        if (manifestUrl) URL.revokeObjectURL(manifestUrl);
+        manifestUrl = URL.createObjectURL(
+          new Blob([JSON.stringify(manifestFor(firmware))], { type: "application/json" }),
+        );
+        installButton.setAttribute("manifest", manifestUrl);
+      }
+
+      function updateSelection() {
+        const firmware = firmwares[Number(select.value)] || firmwares[0];
+        channel.textContent = firmware.channel;
+        version.textContent = firmware.version;
+        note.textContent = firmware.note;
+        setManifest(firmware);
+      }
+
+      const stable = document.createElement("optgroup");
+      stable.label = "Stable release";
+      firmwares.forEach((firmware, index) => {
+        const option = document.createElement("option");
+        option.value = String(index);
+        option.textContent = firmware.label;
+        stable.append(option);
+      });
+      select.append(stable);
+      select.value = "0";
+
+      updateSelection();
+      customElements.whenDefined("esp-web-install-button").then(updateSelection);
+      select.addEventListener("change", updateSelection);
+    </script>
+  </body>
+</html>
