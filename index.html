@@ -302,8 +302,8 @@
                 <strong id="firmware-version">dev</strong>
               </div>
               <div class="fact">
-                <span>写入地址</span>
-                <strong>0x0</strong>
+                <span>写入方式</span>
+                <strong>分段写入</strong>
               </div>
             </div>
 
@@ -341,7 +341,7 @@
           </div>
           <div class="detail">
             <h2>写入内容</h2>
-            <p>页面会写入合并固件，包含 bootloader、分区表、boot_app0 和应用固件。</p>
+            <p>页面会按本地稳定烧录相同地址写入 bootloader、分区表、boot_app0 和应用固件。</p>
           </div>
           <div class="detail">
             <h2>完成后</h2>
@@ -357,8 +357,13 @@
           label: "Stable 20260629-030534",
           channel: "Stable",
           version: "20260629-030534",
-          path: "./firmware/bambu_monitor_full.bin",
-          note: "完整工厂刷写固件，从 0x0 写入。刷写会覆盖当前固件，请先确认设备和串口正确。",
+          note: "完整工厂刷写固件，使用与本地 PlatformIO 验证一致的分段地址写入。刷写会覆盖当前固件，请先确认设备和串口正确。",
+          parts: [
+            { path: "./firmware/bootloader.bin", offset: 0x0000 },
+            { path: "./firmware/partitions.bin", offset: 0x8000 },
+            { path: "./firmware/boot_app0.bin", offset: 0xe000 },
+            { path: "./firmware/firmware.bin", offset: 0x10000 },
+          ],
         },
       ];
 
@@ -370,7 +375,6 @@
       let manifestUrl = null;
 
       function manifestFor(firmware) {
-        const imageUrl = new URL(firmware.path, window.location.href).href;
         return {
           name: "Bambu Monitor",
           version: firmware.version,
@@ -380,7 +384,10 @@
             {
               chipFamily: "ESP32-S3",
               improv: false,
-              parts: [{ path: imageUrl, offset: 0 }],
+              parts: firmware.parts.map((part) => ({
+                path: new URL(part.path, window.location.href).href,
+                offset: part.offset,
+              })),
             },
           ],
         };

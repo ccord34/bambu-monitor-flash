@@ -4,6 +4,15 @@
 
 访问 GitHub Pages 后，使用桌面版 Chrome 或 Edge，通过 USB 数据线连接设备并点击页面中的“安装所选固件”即可刷写。
 
+页面使用与本地 PlatformIO 成功验证一致的分段写入方式：
+
+```text
+0x0000  firmware/bootloader.bin
+0x8000  firmware/partitions.bin
+0xe000  firmware/boot_app0.bin
+0x10000 firmware/firmware.bin
+```
+
 ## 许可证
 
 本仓库中的在线烧录页面和固件二进制仅允许个人、评估、维修和非商业部署使用。
