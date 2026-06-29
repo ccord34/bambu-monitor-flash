@@ -332,7 +332,7 @@
               </esp-web-install-button>
               <a
                 class="download-link"
-                href="./downloads/BambuMonitor-ESP32S3-DualEye-20260629-standby-ip.zip"
+                href="./downloads/BambuMonitor-ESP32S3-DualEye-20260629-mapping-speed.zip"
                 download
               >
                 下载离线刷写包
@@ -378,10 +378,10 @@
     <script>
       const firmwares = [
         {
-          label: "Stable 20260629-standby-ip",
+          label: "Stable 20260629-mapping-speed",
           channel: "Stable",
-          version: "20260629-standby-ip",
-          note: "AP 配网与待机后台地址页更新版；待机页显示局域网后台地址，在线烧录使用与本地 PlatformIO 验证一致的分段地址写入。",
+          version: "20260629-mapping-speed",
+          note: "打印机映射切换响应优化版；缩短打印机切换与切到待机页后的 MQTT 重连等待，在线烧录使用与本地 PlatformIO 验证一致的分段地址写入。",
           parts: [
             { path: "./firmware/bootloader.bin", offset: 0x0000 },
             { path: "./firmware/partitions.bin", offset: 0x8000 },
@@ -450,4 +450,6 @@
     </script>
   </body>
 </html>
+
+
 
