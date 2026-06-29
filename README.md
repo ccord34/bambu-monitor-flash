@@ -1,4 +1,4 @@
-# Bambu Monitor 在线烧录
+﻿# Bambu Monitor 在线烧录
 
 这是 Bambu Monitor for ESP32-S3 DualEye 的在线烧录页面仓库。
 
@@ -31,7 +31,7 @@
 
 如果不想使用网页在线烧录，可以下载离线刷写包：
 
-[BambuMonitor-ESP32S3-DualEye-20260629-030534.zip](downloads/BambuMonitor-ESP32S3-DualEye-20260629-030534.zip)
+[BambuMonitor-ESP32S3-DualEye-20260629-standby-ip.zip](downloads/BambuMonitor-ESP32S3-DualEye-20260629-standby-ip.zip)
 
 解压后：
 
@@ -46,3 +46,4 @@ flash.bat COM13
 ```
 
 离线刷写包同样只允许个人、评估、维修和非商业部署使用，不允许商用。
+
