@@ -31,7 +31,7 @@
 
 如果不想使用网页在线烧录，可以下载离线刷写包：
 
-[BambuMonitor-ESP32S3-DualEye-20260629-mapping-speed.zip](downloads/BambuMonitor-ESP32S3-DualEye-20260629-mapping-speed.zip)
+[BambuMonitor-ESP32S3-DualEye-20260703-auto-schedule.zip](downloads/BambuMonitor-ESP32S3-DualEye-20260703-auto-schedule.zip)
 
 解压后：
 

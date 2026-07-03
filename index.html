@@ -332,7 +332,7 @@
               </esp-web-install-button>
               <a
                 class="download-link"
-                href="./downloads/BambuMonitor-ESP32S3-DualEye-20260629-mapping-speed.zip"
+                href="./downloads/BambuMonitor-ESP32S3-DualEye-20260703-auto-schedule.zip"
                 download
               >
                 下载离线刷写包
@@ -378,10 +378,10 @@
     <script>
       const firmwares = [
         {
-          label: "Stable 20260629-mapping-speed",
+          label: "Stable 20260703-auto-schedule",
           channel: "Stable",
-          version: "20260629-mapping-speed",
-          note: "打印机映射切换响应优化版；缩短打印机切换与切到待机页后的 MQTT 重连等待，在线烧录使用与本地 PlatformIO 验证一致的分段地址写入。",
+          version: "20260703-auto-schedule",
+          note: "自动调度改进版；新开始的短时打印任务会优先显示，简约模式下失败显示红色环、暂停显示黄色环，恢复后自动回到用户自定义颜色。",
           parts: [
             { path: "./firmware/bootloader.bin", offset: 0x0000 },
             { path: "./firmware/partitions.bin", offset: 0x8000 },
