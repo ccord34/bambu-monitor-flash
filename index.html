@@ -332,7 +332,7 @@
               </esp-web-install-button>
               <a
                 class="download-link"
-                href="./downloads/BambuMonitor-ESP32S3-DualEye-20260703-auto-standby-fix.zip"
+                href="./downloads/BambuMonitor-ESP32S3-DualEye-v0.3.0.zip"
                 download
               >
                 下载离线刷写包
@@ -378,10 +378,10 @@
     <script>
       const firmwares = [
         {
-          label: "Stable 20260703-auto-standby-fix",
+          label: "Stable v0.3.0",
           channel: "Stable",
-          version: "20260703-auto-standby-fix",
-          note: "自动调度待机修正版；防止同一台打印机同时占用上下屏，已完成的屏幕会按设置进入对应待机媒体。保留 WiFi 状态显示修复。",
+          version: "v0.3.0",
+          note: "主界面显示优化版；简约/详细模式移除 WiFi 与腔灯图标，改为显示当前仓温，无仓温机型显示 --°C。保留自动调度待机修复。",
           parts: [
             { path: "./firmware/bootloader.bin", offset: 0x0000 },
             { path: "./firmware/partitions.bin", offset: 0x8000 },
