@@ -31,7 +31,7 @@
 
 如果不想使用网页在线烧录，可以下载离线刷写包：
 
-[BambuMonitor-ESP32S3-DualEye-v0.3.0.zip](downloads/BambuMonitor-ESP32S3-DualEye-v0.3.0.zip)
+[BambuMonitor-ESP32S3-DualEye-v0.3.1.zip](downloads/BambuMonitor-ESP32S3-DualEye-v0.3.1.zip)
 
 解压后：
 
